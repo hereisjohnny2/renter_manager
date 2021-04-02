@@ -1,11 +1,12 @@
-import 'package:renter_manager/models/renter.dart';
-import 'package:renter_manager/pages/renter_page.dart';
+import 'package:renter_manager/models/house.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class RentersPage extends StatelessWidget {
-  final List<Renter> inquilinos;
-  RentersPage(this.inquilinos);
+import 'package:renter_manager/pages/houses/house.dart';
+
+class HousesList extends StatelessWidget {
+  final List<House> houses;
+  HousesList(this.houses);
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +23,7 @@ class RentersPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Text(
-              "INQUILINOS".toUpperCase(),
+              "imóveis".toUpperCase(),
               style: GoogleFonts.montserrat(
                 color: Colors.white,
                 fontSize: 30.0,
@@ -37,7 +38,7 @@ class RentersPage extends StatelessWidget {
                   Expanded(
                     child: TextField(
                       decoration: InputDecoration(
-                        labelText: "Buscar Inquilinos",
+                        labelText: "Buscar Imóveis",
                         labelStyle: TextStyle(
                           fontSize: 12.0,
                           color: Color(0x8C582B2B),
@@ -53,7 +54,7 @@ class RentersPage extends StatelessWidget {
             ),
             Expanded(
               child: ListView.builder(
-                itemCount: inquilinos.length,
+                itemCount: houses.length,
                 itemBuilder: (context, index) {
                   return buildRenterCard(context, index);
                 },
@@ -79,18 +80,15 @@ class RentersPage extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => RenterPage(inquilinos[index]),
+                  builder: (context) => HousePage(houses[index]),
                 ),
               );
             },
-            title: Text(
-              inquilinos[index].nome,
-              style: TextStyle(fontSize: 16.0),
-            ),
+            title:
+                Text(houses[index].endereco, style: TextStyle(fontSize: 16.0)),
             subtitle: Text(
-              inquilinos[index].endereco,
-              style: TextStyle(fontSize: 12.0),
-            ),
+                houses[index].estadoAlugada ? "Disponível" : "Alugada",
+                style: TextStyle(fontSize: 12.0)),
             trailing: Container(
               height: 40.0,
               decoration: BoxDecoration(
@@ -98,9 +96,9 @@ class RentersPage extends StatelessWidget {
                 shape: BoxShape.circle,
               ),
               child: IconButton(
-                icon: Icon(Icons.phone),
+                icon: Icon(Icons.share),
                 onPressed: () {
-                  print("click phone");
+                  print("click share");
                 },
                 color: Colors.white,
               ),

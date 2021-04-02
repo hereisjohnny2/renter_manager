@@ -1,4 +1,4 @@
-import 'package:renter_manager/main.dart';
+import 'package:renter_manager/constants/theme_data.dart';
 import 'package:renter_manager/models/house.dart';
 import 'package:flutter/material.dart';
 

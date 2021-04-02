@@ -3,8 +3,8 @@ import 'package:renter_manager/models/renter.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import 'package:renter_manager/pages/houses_page.dart';
-import 'package:renter_manager/pages/renters_page.dart';
+import 'package:renter_manager/pages/houses/list.dart';
+import 'package:renter_manager/pages/renters/list.dart';
 import 'package:renter_manager/data/fakeData.dart';
 
 List<Renter> loadRentersDataFromFakeInfo(List<Map> fakeData) {
@@ -36,12 +36,12 @@ List<House> loadHousesDataFromFakeInfo(List<Map> houses) {
   return outputHouses;
 }
 
-class HomePage extends StatefulWidget {
+class Dashboard extends StatefulWidget {
   @override
-  _HomePageState createState() => _HomePageState();
+  _DashboardState createState() => _DashboardState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _DashboardState extends State<Dashboard> {
   final List<Renter> renters = loadRentersDataFromFakeInfo(rentersData);
   final List<House> houses = loadHousesDataFromFakeInfo(housesData);
 
@@ -78,10 +78,10 @@ class _HomePageState extends State<HomePage> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 buildMainPageButton("inquilinos", Icons.person, () {
-                  return RentersPage(renters);
+                  return RentersList(renters);
                 }),
                 buildMainPageButton("imóveis", Icons.home, () {
-                  return HousesPage(houses);
+                  return HousesList(houses);
                 }),
               ],
             ),

@@ -8,6 +8,8 @@ As backend the applications uses Firebase, which provides services for authentic
  
  - flutter sdk: ">=2.7.0 <3.0.0"
  - google_fonts: ^1.1.0
+ - firebase_core: "^0.7.0"
+ - firebase_auth: "^0.20.1"
 
 ## Getting Started
 
