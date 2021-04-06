@@ -1,12 +1,12 @@
-class Renter {
+import 'package:flutter/material.dart';
+
+class Renter extends ChangeNotifier {
   String nome;
-  String telefone;
-  String nomeCompleto;
   String endereco;
-  double valorAluguel;
+  String telefone;
+  String email;
   int diaPagamento;
-  List<int> inicioContrato;
-  List<int> fimContrato;
+  double valorAluguel;
 
   // Construtor
   Renter(
@@ -14,9 +14,6 @@ class Renter {
     this.telefone,
     this.endereco,
     this.valorAluguel,
-    this.diaPagamento, [
-    this.nomeCompleto,
-    this.inicioContrato,
-    this.fimContrato,
-  ]);
+    this.diaPagamento,
+  );
 }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class TextInput extends StatelessWidget {
-  const TextInput({
+class FormInput extends StatelessWidget {
+  const FormInput({
     Key key,
     @required TextEditingController controller,
     @required String label,

@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:renter_manager/components/text_input.dart';
+import 'package:renter_manager/components/auth_alert_dialog.dart';
+import 'package:renter_manager/components/form_button.dart';
+import 'package:renter_manager/components/form_input.dart';
 import 'package:renter_manager/pages/dashboard/dashboard.dart';
 import 'package:renter_manager/pages/signup/form.dart';
-import 'package:renter_manager/models/auth.dart';
-import '../../constants/theme_data.dart';
+import 'package:renter_manager/models/user.dart';
 
 class AuthenticationForm extends StatefulWidget {
   @override
@@ -17,70 +18,84 @@ class _AuthenticationFormState extends State<AuthenticationForm> {
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passController = TextEditingController();
 
-  void _login(String email, String pass, BuildContext context) async {
-    final auth = Provider.of<Auth>(context, listen: false);
-    try {
-      if (await auth.loginUser(email, pass)) {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => Dashboard()),
-        );
-      }
-    } catch (e) {}
-  }
-
   @override
   Widget build(BuildContext context) {
-    final auth = Provider.of<Auth>(context);
     return Scaffold(
-      backgroundColor: ColorsTheme.mainColor,
       body: Center(
         child: Form(
           key: _formKey,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              TextInput(controller: _emailController, label: "Email"),
-              TextInput(
-                controller: _passController,
-                label: "Senha",
-                isPassword: true,
-              ),
-              auth.status == Status.Authenticating
-                  ? Center(child: CircularProgressIndicator())
-                  : Padding(
-                      padding: EdgeInsets.all(16.0),
-                      child: ElevatedButton(
-                        child: Text('Entrar'),
-                        onPressed: () async {
-                          if (_formKey.currentState.validate()) {
-                            _login(
-                              _emailController.text,
-                              _passController.text,
-                              context,
-                            );
-                          }
-                        },
-                      ),
-                    ),
-              Padding(
-                padding: EdgeInsets.all(16.0),
-                child: ElevatedButton(
-                  child: Text('Criar Novo Usuário'),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => SignUpForm(),
-                      ),
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                FormInput(controller: _emailController, label: "Email"),
+                FormInput(
+                    controller: _passController,
+                    label: "Senha",
+                    isPassword: true),
+                SizedBox(height: 50),
+                Consumer<User>(
+                  builder: (context, user, child) {
+                    Status _status = user.status;
+                    if (_status == Status.Authenticating) {
+                      return CircularProgressIndicator();
+                    }
+                    return Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        FormButton(
+                          label: "Novo Usuario",
+                          navigateTo: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => SignUpForm(),
+                            ),
+                          ),
+                        ),
+                        FormButton(
+                          label: 'Login',
+                          navigateTo: () => _validateForm(context),
+                        )
+                      ],
                     );
                   },
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
     );
+  }
+
+  void _validateForm(BuildContext context) {
+    if (_formKey.currentState.validate()) {
+      _login(
+        _emailController.text,
+        _passController.text,
+        context,
+      );
+    }
+  }
+
+  void _login(String email, String pass, BuildContext context) async {
+    final user = Provider.of<User>(context, listen: false);
+    try {
+      if (await user.loginUser(email, pass)) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => Dashboard()),
+        );
+      } else {
+        showDialog(
+          context: context,
+          builder: (context) {
+            return AuthAlertDialog(alertMessage: user.getErroMessage);
+          },
+        );
+      }
+    } catch (e) {
+      print(e);
+    }
   }
 }

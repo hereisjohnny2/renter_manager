@@ -2,8 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'package:renter_manager/constants/theme_data.dart';
-import 'package:renter_manager/models/auth.dart';
+import 'package:renter_manager/models/user.dart';
 import 'package:renter_manager/pages/login/form.dart';
 
 void main() async {
@@ -12,7 +11,7 @@ void main() async {
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (context) => Auth()),
+        ChangeNotifierProvider(create: (context) => User()),
       ],
       child: RenterManagerApp(),
     ),
@@ -26,7 +25,7 @@ class RenterManagerApp extends StatelessWidget {
       title: 'Renter Manager',
       home: AuthenticationForm(),
       debugShowCheckedModeBanner: false,
-      theme: themeData,
+      // theme: themeData,
     );
   }
 }

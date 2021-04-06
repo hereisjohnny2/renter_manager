@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:renter_manager/components/text_input.dart';
+import 'package:renter_manager/components/auth_alert_dialog.dart';
+import 'package:renter_manager/components/form_button.dart';
+import 'package:renter_manager/components/form_input.dart';
+import 'package:renter_manager/constants/color_data.dart';
 import 'package:renter_manager/pages/login/form.dart';
-import 'package:renter_manager/models/auth.dart';
-
-import '../../constants/theme_data.dart';
+import 'package:renter_manager/models/user.dart';
 
 class SignUpForm extends StatefulWidget {
   @override
@@ -18,65 +19,83 @@ class _SignUpFormState extends State<SignUpForm> {
 
   final _formKey = GlobalKey<FormState>();
 
-  void _signUp(String email, String pass, BuildContext context) async {
-    final auth = Provider.of<Auth>(context, listen: false);
-
-    try {
-      if (await auth.signUpUser(email, pass)) {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => AuthenticationForm()),
-        );
-      }
-    } catch (e) {
-      print(e);
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
-    final auth = Provider.of<Auth>(context);
     return Scaffold(
-      backgroundColor: ColorsTheme.mainColor,
       appBar: AppBar(
+        iconTheme: IconThemeData(
+          color: kColor2,
+        ),
+        backgroundColor: Colors.white,
         elevation: 0,
-        backgroundColor: ColorsTheme.mainColor,
       ),
-      body: Form(
-        key: _formKey,
-        child: Center(
+      body: Center(
+        child: Form(
+          key: _formKey,
           child: SingleChildScrollView(
             child: Column(
               children: [
-                TextInput(controller: _nameController, label: "Nome"),
-                TextInput(controller: _emailController, label: "Email"),
-                TextInput(
+                FormInput(controller: _nameController, label: "Nome"),
+                FormInput(controller: _emailController, label: "Email"),
+                FormInput(
                   controller: _passController,
                   label: "Senha",
                   isPassword: true,
                 ),
-                auth.status == Status.Creating
-                    ? Center(child: CircularProgressIndicator())
-                    : Padding(
-                        padding: EdgeInsets.all(16.0),
-                        child: ElevatedButton(
-                          child: Text('Criar'),
-                          onPressed: () {
-                            if (_formKey.currentState.validate()) {
-                              _signUp(
-                                _emailController.text,
-                                _passController.text,
-                                context,
-                              );
-                            }
-                          },
-                        ),
-                      ),
+                SizedBox(height: 50),
+                Consumer<User>(
+                  builder: (context, user, child) {
+                    if (user.status == Status.Creating) {
+                      return CircularProgressIndicator();
+                    }
+                    return FormButton(
+                      label: "Criar",
+                      navigateTo: () => _validateForm(context),
+                    );
+                  },
+                ),
               ],
             ),
           ),
         ),
       ),
     );
+  }
+
+  void _validateForm(BuildContext context) {
+    if (_formKey.currentState.validate()) {
+      _signUp(
+        _nameController.text,
+        _emailController.text,
+        _passController.text,
+        context,
+      );
+    }
+  }
+
+  void _signUp(
+    String name,
+    String email,
+    String pass,
+    BuildContext context,
+  ) async {
+    final user = Provider.of<User>(context, listen: false);
+    try {
+      if (await user.signUpUser(email, pass, name)) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => AuthenticationForm()),
+        );
+      } else {
+        showDialog(
+          context: context,
+          builder: (context) {
+            return AuthAlertDialog(alertMessage: user.getErroMessage);
+          },
+        );
+      }
+    } catch (e) {
+      print(e);
+    }
   }
 }

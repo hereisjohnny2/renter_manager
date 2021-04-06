@@ -1,4 +1,3 @@
-import 'package:renter_manager/constants/theme_data.dart';
 import 'package:renter_manager/models/house.dart';
 import 'package:flutter/material.dart';
 
@@ -20,7 +19,6 @@ class HousePage extends StatelessWidget {
               onPressed: () {}),
         ],
       ),
-      backgroundColor: ColorsTheme.mainColor,
       body: Column(
         children: <Widget>[
           Container(

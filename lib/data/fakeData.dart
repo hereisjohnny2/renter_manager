@@ -4,7 +4,7 @@ List<Map> rentersData = [
     "endereco": "Rua santahelena, centro",
     "telefone": "2299999999",
     "email": "email@mail.com",
-    "dia_pagamento": 5,
+    "diaPagamento": 5,
     "valorAluguel": 800.00
   },
   {
@@ -12,7 +12,7 @@ List<Map> rentersData = [
     "endereco": "Rua santahelena, centro",
     "telefone": "2299999999",
     "email": "email@mail.com",
-    "dia_pagamento": 5,
+    "diaPagamento": 5,
     "valorAluguel": 800.00
   },
   {
@@ -20,7 +20,7 @@ List<Map> rentersData = [
     "endereco": "Rua santahelena, centro",
     "telefone": "2299999999",
     "email": "email@mail.com",
-    "dia_pagamento": 5,
+    "diaPagamento": 5,
     "valorAluguel": 800.00
   }
 ];

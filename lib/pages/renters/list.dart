@@ -1,11 +1,13 @@
+import 'package:renter_manager/data/fakeData.dart';
 import 'package:renter_manager/models/renter.dart';
+import 'package:renter_manager/pages/dashboard/dashboard.dart';
 import 'package:renter_manager/pages/renters/renter.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class RentersList extends StatelessWidget {
-  final List<Renter> inquilinos;
-  RentersList(this.inquilinos);
+  final List<Renter> inquilinos = loadRentersDataFromFakeInfo(rentersData);
+  // RentersList(this.inquilinos);
 
   @override
   Widget build(BuildContext context) {

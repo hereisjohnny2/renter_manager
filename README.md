@@ -10,6 +10,7 @@ As backend the applications uses Firebase, which provides services for authentic
  - google_fonts: ^1.1.0
  - firebase_core: "^0.7.0"
  - firebase_auth: "^0.20.1"
+ - provider: ^4.3.2+3
 
 ## Getting Started
 
