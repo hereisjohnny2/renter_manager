@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:renter_manager/components/auth_alert_dialog.dart';
 import 'package:renter_manager/components/form_button.dart';
@@ -36,7 +37,11 @@ class _SignUpFormState extends State<SignUpForm> {
             child: Column(
               children: [
                 FormInput(controller: _nameController, label: "Nome"),
-                FormInput(controller: _emailController, label: "Email"),
+                FormInput(
+                  controller: _emailController,
+                  label: "Email",
+                  inputType: TextInputType.emailAddress,
+                ),
                 FormInput(
                   controller: _passController,
                   label: "Senha",

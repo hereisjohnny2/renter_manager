@@ -1,34 +1,38 @@
 import 'package:flutter/material.dart';
 
 class FormInput extends StatelessWidget {
+  final TextEditingController controller;
+  final String label;
+  final bool isPassword;
+  final TextInputType inputType;
+
   const FormInput({
     Key key,
-    @required TextEditingController controller,
-    @required String label,
+    TextEditingController controller,
+    String label,
     bool isPassword = false,
-  })  : _controller = controller,
-        _label = label,
-        _isPassword = isPassword,
+    TextInputType inputType = TextInputType.text,
+  })  : controller = controller,
+        label = label,
+        isPassword = isPassword,
+        inputType = inputType,
         super(key: key);
-
-  final TextEditingController _controller;
-  final String _label;
-  final bool _isPassword;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.all(16.0),
       child: TextFormField(
-        controller: _controller,
+        controller: controller,
         decoration: InputDecoration(
-          labelText: _label,
+          labelText: label,
         ),
         validator: (value) {
-          if (value.isEmpty) return 'Digite um valor para $_label';
+          if (value.isEmpty) return 'Digite um valor para $label';
           return null;
         },
-        obscureText: _isPassword,
+        obscureText: isPassword,
+        keyboardType: inputType,
       ),
     );
   }

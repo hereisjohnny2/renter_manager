@@ -14,7 +14,7 @@ class NotificationCard extends StatelessWidget {
     return GestureDetector(
       child: Card(
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(31.0, 21.0, 31.0, 21.0),
+          padding: const EdgeInsets.symmetric(horizontal: 31.0, vertical: 21.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[

@@ -28,7 +28,11 @@ class _AuthenticationFormState extends State<AuthenticationForm> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                FormInput(controller: _emailController, label: "Email"),
+                FormInput(
+                  controller: _emailController,
+                  label: "Email",
+                  inputType: TextInputType.emailAddress,
+                ),
                 FormInput(
                     controller: _passController,
                     label: "Senha",

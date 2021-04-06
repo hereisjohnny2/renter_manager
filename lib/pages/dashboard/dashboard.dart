@@ -5,6 +5,7 @@ import 'package:renter_manager/models/renter.dart';
 import 'package:flutter/material.dart';
 import 'package:renter_manager/models/user.dart';
 import 'package:renter_manager/pages/dashboard/components/dashboard_button_list.dart';
+import 'package:renter_manager/pages/dashboard/components/last_notifications_list.dart';
 import 'package:renter_manager/pages/dashboard/components/welcome_bar.dart';
 
 import 'package:renter_manager/data/fakeData.dart';
@@ -70,9 +71,10 @@ class _DashboardState extends State<Dashboard> {
                 children: [
                   WelcomeBar(user: _user, name: data['name']),
                   Expanded(
-                    flex: 10,
-                    child: Container(),
+                    flex: 5,
+                    child: Placeholder(),
                   ),
+                  LastNotificationsList(renters: renters),
                   DashboardButtonList(),
                 ],
               ),
