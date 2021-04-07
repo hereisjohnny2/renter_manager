@@ -12,22 +12,19 @@ class WelcomeBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      flex: 2,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            "Olá, $name",
-            style: GoogleFonts.montserrat(
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-              fontSize: 24.0,
-            ),
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(
+          "Olá, $name",
+          style: GoogleFonts.montserrat(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+            fontSize: 24.0,
           ),
-          LogoutButton(user: user),
-        ],
-      ),
+        ),
+        LogoutButton(user: user),
+      ],
     );
   }
 }

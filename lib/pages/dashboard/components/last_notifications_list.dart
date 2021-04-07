@@ -9,17 +9,14 @@ class LastNotificationsList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Flexible(
-      flex: 5,
-      child: Padding(
-        padding: EdgeInsets.symmetric(vertical: 12.0),
-        child: ListView.builder(
-          padding: EdgeInsets.all(0.0),
-          itemCount: renters.length,
-          itemBuilder: (context, index) {
-            return NotificationCard(renter: renters[index]);
-          },
-        ),
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: 12.0),
+      child: ListView.builder(
+        padding: EdgeInsets.all(0.0),
+        itemCount: renters.length,
+        itemBuilder: (context, index) {
+          return NotificationCard(renter: renters[index]);
+        },
       ),
     );
   }

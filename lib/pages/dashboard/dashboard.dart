@@ -5,39 +5,11 @@ import 'package:renter_manager/models/renter.dart';
 import 'package:flutter/material.dart';
 import 'package:renter_manager/models/user.dart';
 import 'package:renter_manager/pages/dashboard/components/dashboard_button_list.dart';
+import 'package:renter_manager/pages/dashboard/components/dashboard_staus_card.dart';
 import 'package:renter_manager/pages/dashboard/components/last_notifications_list.dart';
 import 'package:renter_manager/pages/dashboard/components/welcome_bar.dart';
 
 import 'package:renter_manager/data/fakeData.dart';
-
-List<Renter> loadRentersDataFromFakeInfo(List<Map> fakeData) {
-  List<Renter> outputRenters = [];
-  for (var item in fakeData) {
-    outputRenters.add(new Renter(
-      item["nome"],
-      item["telefone"],
-      item["endereco"],
-      item["valorAluguel"],
-      item["dia_pagamento"],
-    ));
-  }
-  return outputRenters;
-}
-
-List<House> loadHousesDataFromFakeInfo(List<Map> houses) {
-  List<House> outputHouses = [];
-  for (var house in houses) {
-    outputHouses.add(new House(
-      house["endereco"],
-      house["complemento"],
-      house["descricao"],
-      house["valorAluguel"],
-      house["area"],
-      house["estado"],
-    ));
-  }
-  return outputHouses;
-}
 
 class Dashboard extends StatefulWidget {
   @override
@@ -69,13 +41,32 @@ class _DashboardState extends State<Dashboard> {
               padding: EdgeInsets.fromLTRB(16.0, 30.0, 16.0, 16.0),
               child: Column(
                 children: [
-                  WelcomeBar(user: _user, name: data['name']),
                   Expanded(
-                    flex: 5,
-                    child: Placeholder(),
+                    flex: 2,
+                    child: WelcomeBar(user: _user, name: data['name']),
                   ),
-                  LastNotificationsList(renters: renters),
-                  DashboardButtonList(),
+                  Expanded(
+                    flex: 3,
+                    child: DashboardStatusCard(
+                      label: 'Imóveis Alugados',
+                      statusData: ['10', '15'],
+                    ),
+                  ),
+                  Expanded(
+                    flex: 3,
+                    child: DashboardStatusCard(
+                      label: 'Alugueis Atrasados',
+                      statusData: ['3', '15'],
+                    ),
+                  ),
+                  Flexible(
+                    flex: 4,
+                    child: LastNotificationsList(renters: <Renter>[]),
+                  ),
+                  Flexible(
+                    flex: 2,
+                    child: DashboardButtonList(),
+                  ),
                 ],
               ),
             );

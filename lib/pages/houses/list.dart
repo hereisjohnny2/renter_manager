@@ -2,7 +2,6 @@ import 'package:renter_manager/data/fakeData.dart';
 import 'package:renter_manager/models/house.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:renter_manager/pages/dashboard/dashboard.dart';
 
 import 'package:renter_manager/pages/houses/house.dart';
 
