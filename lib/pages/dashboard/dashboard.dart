@@ -17,7 +17,6 @@ class Dashboard extends StatefulWidget {
 }
 
 class _DashboardState extends State<Dashboard> {
-  final List<Renter> renters = loadRentersDataFromFakeInfo(rentersData);
   final List<House> houses = loadHousesDataFromFakeInfo(housesData);
 
   @override

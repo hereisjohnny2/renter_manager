@@ -5,7 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class RentersList extends StatelessWidget {
-  final List<Renter> inquilinos = loadRentersDataFromFakeInfo(rentersData);
+  final List<Renter> inquilinos =
+      rentersData.map((e) => Renter.fromMap(e, '1')).toList();
   // RentersList(this.inquilinos);
 
   @override

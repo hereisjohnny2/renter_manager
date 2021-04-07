@@ -1,8 +1,8 @@
 import 'package:renter_manager/models/house.dart';
-import 'package:renter_manager/models/renter.dart';
 
 List<Map> rentersData = [
   {
+    "id": 1,
     "nome": "Fulano de Tal",
     "endereco": "Rua santahelena, centro",
     "telefone": "2299999999",
@@ -10,22 +10,6 @@ List<Map> rentersData = [
     "diaPagamento": 5,
     "valorAluguel": 800.00
   },
-  {
-    "nome": "Fulano de Tal",
-    "endereco": "Rua santahelena, centro",
-    "telefone": "2299999999",
-    "email": "email@mail.com",
-    "diaPagamento": 5,
-    "valorAluguel": 800.00
-  },
-  {
-    "nome": "Fulano de Tal",
-    "endereco": "Rua santahelena, centro",
-    "telefone": "2299999999",
-    "email": "email@mail.com",
-    "diaPagamento": 5,
-    "valorAluguel": 800.00
-  }
 ];
 
 List<Map> housesData = [
@@ -38,20 +22,6 @@ List<Map> housesData = [
     "valorAluguel": 800.00
   }
 ];
-
-List<Renter> loadRentersDataFromFakeInfo(List<Map> fakeData) {
-  List<Renter> outputRenters = [];
-  for (var item in fakeData) {
-    outputRenters.add(new Renter(
-      item["nome"],
-      item["telefone"],
-      item["endereco"],
-      item["valorAluguel"],
-      item["dia_pagamento"],
-    ));
-  }
-  return outputRenters;
-}
 
 List<House> loadHousesDataFromFakeInfo(List<Map> houses) {
   List<House> outputHouses = [];
