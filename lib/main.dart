@@ -1,9 +1,10 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:renter_manager/models/renters.dart';
 
 import 'package:renter_manager/models/user.dart';
-import 'package:renter_manager/pages/login/form.dart';
+import 'package:renter_manager/pages/router.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -11,7 +12,11 @@ void main() async {
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (context) => User()),
+        ChangeNotifierProvider(create: (_) => User()),
+        ChangeNotifierProxyProvider<User, Renters>(
+          create: (_) => Renters(),
+          update: (_, User user, Renters renters) => renters..update(user),
+        ),
       ],
       child: RenterManagerApp(),
     ),
@@ -23,8 +28,9 @@ class RenterManagerApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Renter Manager',
-      home: AuthenticationForm(),
       debugShowCheckedModeBanner: false,
+      initialRoute: '/auth',
+      onGenerateRoute: PageRouter.generateRoute,
       // theme: themeData,
     );
   }

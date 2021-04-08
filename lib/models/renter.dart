@@ -26,7 +26,7 @@ class Renter extends ChangeNotifier {
         telefone = snapshot['telefone'],
         email = snapshot['email'],
         diaPagamento = snapshot['diaPagamento'],
-        valorAluguel = snapshot['valorAluguel'];
+        valorAluguel = snapshot['valorAluguel'].toDouble();
 
   toJson() {
     return {

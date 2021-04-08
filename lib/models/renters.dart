@@ -1,13 +1,17 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:renter_manager/locator.dart';
 import 'package:renter_manager/models/renter.dart';
+import 'package:renter_manager/models/user.dart';
 import 'package:renter_manager/services/firestore_api.dart';
 
 class Renters extends ChangeNotifier {
-  Api _api = locator<Api>();
-
+  // User _user;
+  Api _api;
   List<Renter> _renters;
+
+  void update(User user) {
+    _api = Api(pathToCollection: 'users/${user.getUid}/renters');
+  }
 
   int numberOfRenters() => _renters.length;
 

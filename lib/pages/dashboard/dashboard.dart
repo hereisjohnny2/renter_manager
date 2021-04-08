@@ -34,7 +34,7 @@ class _DashboardState extends State<Dashboard> {
               child: Text("Algo deu errado"),
             );
           }
-          if (snapshot.connectionState == ConnectionState.done) {
+          if (snapshot.hasData) {
             Map<String, dynamic> data = snapshot.data.data();
             return Padding(
               padding: EdgeInsets.fromLTRB(16.0, 30.0, 16.0, 16.0),

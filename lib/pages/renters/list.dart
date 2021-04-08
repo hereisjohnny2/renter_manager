@@ -1,16 +1,16 @@
-import 'package:renter_manager/data/fakeData.dart';
+import 'package:provider/provider.dart';
 import 'package:renter_manager/models/renter.dart';
+import 'package:renter_manager/models/renters.dart';
 import 'package:renter_manager/pages/renters/renter.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class RentersList extends StatelessWidget {
-  final List<Renter> inquilinos =
-      rentersData.map((e) => Renter.fromMap(e, '1')).toList();
-  // RentersList(this.inquilinos);
+  List renters = [];
 
   @override
   Widget build(BuildContext context) {
+    final rentersProvider = Provider.of<Renters>(context);
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -18,51 +18,64 @@ class RentersList extends StatelessWidget {
         backgroundColor: Color(0xFFFA8A8A),
       ),
       backgroundColor: Color(0xFFFA8A8A),
-      body: Padding(
-        padding: EdgeInsets.fromLTRB(25.0, 0.0, 25.0, 25.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Text(
-              "INQUILINOS".toUpperCase(),
-              style: GoogleFonts.montserrat(
-                color: Colors.white,
-                fontSize: 30.0,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 51.0, bottom: 24.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      body: StreamBuilder(
+        stream: rentersProvider.fetchRentersAsStream(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            renters = snapshot.data.docs
+                .map((doc) => Renter.fromMap(doc.data(), doc.id))
+                .toList();
+            return Padding(
+              padding: EdgeInsets.fromLTRB(25.0, 0.0, 25.0, 25.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Expanded(
-                    child: TextField(
-                      decoration: InputDecoration(
-                        labelText: "Buscar Inquilinos",
-                        labelStyle: TextStyle(
-                          fontSize: 12.0,
-                          color: Color(0x8C582B2B),
-                          fontStyle: FontStyle.italic,
-                        ),
-                      ),
-                      style: TextStyle(fontSize: 12.0),
+                  Text(
+                    "INQUILINOS".toUpperCase(),
+                    style: GoogleFonts.montserrat(
+                      color: Colors.white,
+                      fontSize: 30.0,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
-                  IconButton(icon: Icon(Icons.sort), onPressed: () {})
+                  Padding(
+                    padding: const EdgeInsets.only(top: 51.0, bottom: 24.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: <Widget>[
+                        Expanded(
+                          child: TextField(
+                            decoration: InputDecoration(
+                              labelText: "Buscar Inquilinos",
+                              labelStyle: TextStyle(
+                                fontSize: 12.0,
+                                color: Color(0x8C582B2B),
+                                fontStyle: FontStyle.italic,
+                              ),
+                            ),
+                            style: TextStyle(fontSize: 12.0),
+                          ),
+                        ),
+                        IconButton(icon: Icon(Icons.sort), onPressed: () {})
+                      ],
+                    ),
+                  ),
+                  Expanded(
+                    child: ListView.builder(
+                      itemCount: renters.length,
+                      itemBuilder: (context, index) {
+                        return buildRenterCard(context, index);
+                      },
+                    ),
+                  )
                 ],
               ),
-            ),
-            Expanded(
-              child: ListView.builder(
-                itemCount: inquilinos.length,
-                itemBuilder: (context, index) {
-                  return buildRenterCard(context, index);
-                },
-              ),
-            )
-          ],
-        ),
+            );
+          }
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        },
       ),
     );
   }
@@ -81,16 +94,16 @@ class RentersList extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => RenterPage(inquilinos[index]),
+                  builder: (context) => RenterPage(renters[index]),
                 ),
               );
             },
             title: Text(
-              inquilinos[index].nome,
+              renters[index].nome,
               style: TextStyle(fontSize: 16.0),
             ),
             subtitle: Text(
-              inquilinos[index].endereco,
+              renters[index].endereco,
               style: TextStyle(fontSize: 12.0),
             ),
             trailing: Container(
